@@ -1,0 +1,10 @@
+[build]
+  command = "cd frontend && npm install && npm run build"
+  publish = "frontend/build"
+
+[context.production.environment]
+  REACT_APP_API_URL = "https://your-backend.example.com"
+
+[dev]
+  command = "npm run start"
+  port = 8888
