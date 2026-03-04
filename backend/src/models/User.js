@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-  password: { type: String, required: true },
+  password: { type: String },
+  googleId: { type: String, index: true, sparse: true },
+  name: { type: String },
   role: { type: String, enum: ['admin', 'operator'], default: 'operator' },
   createdAt: { type: Date, default: Date.now },
   lastLogin: { type: Date },
@@ -11,7 +13,7 @@ const userSchema = new mongoose.Schema({
 
 // hash password before save
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password') || !this.password) return next();
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);

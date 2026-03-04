@@ -1,23 +1,41 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 
-let socket;
-
 export function useSocket(namespace, onEvent) {
+  const socketRef = useRef(null);
+
   useEffect(() => {
-    socket = io(process.env.REACT_APP_API_URL || '', { path: '/socket.io' });
-    if (namespace) {
-      socket = io(`${process.env.REACT_APP_API_URL || ''}${namespace}`);
-    }
+    const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const socketUrl = namespace ? `${url}${namespace}` : url;
+
+    socketRef.current = io(socketUrl, {
+      path: '/socket.io',
+      reconnection: true,
+      reconnectionAttempts: 5
+    });
+
     if (onEvent) {
       Object.entries(onEvent).forEach(([event, handler]) => {
-        socket.on(event, handler);
+        socketRef.current.on(event, handler);
       });
     }
-    return () => {
-      if (socket) socket.disconnect();
-    };
-  }, [namespace, onEvent]);
 
-  return socket;
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, [namespace]); // Only reconnect if namespace changes
+
+  // Update handlers without reconnecting
+  useEffect(() => {
+    if (!socketRef.current || !onEvent) return;
+
+    Object.entries(onEvent).forEach(([event, handler]) => {
+      socketRef.current.off(event);
+      socketRef.current.on(event, handler);
+    });
+  }, [onEvent]);
+
+  return socketRef.current;
 }

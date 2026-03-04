@@ -9,18 +9,6 @@ export default function Tasks() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
 
-  useEffect(() => {
-    fetchTasks();
-    // subscribe to realtime updates
-    useSocket('/api/agent', {
-      'task:created': fetchTasks,
-      'task:updated': fetchTasks,
-      'task:paused': fetchTasks,
-      'task:resumed': fetchTasks,
-      'task:canceled': fetchTasks,
-    });
-  }, []);
-
   const fetchTasks = async () => {
     try {
       const res = await api.get('/api/tasks');
@@ -29,6 +17,18 @@ export default function Tasks() {
       console.error(err);
     }
   };
+
+  useSocket('/api/agent', {
+    'task:created': fetchTasks,
+    'task:updated': fetchTasks,
+    'task:paused': fetchTasks,
+    'task:resumed': fetchTasks,
+    'task:canceled': fetchTasks,
+  });
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const updateTask = async (id, data) => {
     try {

@@ -4,25 +4,16 @@ import api from '../utils/api';
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // optionally fetch profile
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      api.get('/api/auth/me').then((res) => setUser(res.data)).catch(() => {});
-    }
-  }, []);
+  const [user, setUser] = useState({ id: 'guest', name: 'Guest User', role: 'admin' });
 
   const login = async (email, password) => {
-    const res = await api.post('/api/auth/login', { email, password });
-    localStorage.setItem('accessToken', res.data.accessToken);
-    setUser(await api.get('/api/auth/me').then((r) => r.data));
+    // No-op for now
+    console.log('Login bypassed');
   };
 
   const logout = () => {
-    localStorage.removeItem('accessToken');
-    setUser(null);
+    // No-op for now
+    console.log('Logout bypassed');
   };
 
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;

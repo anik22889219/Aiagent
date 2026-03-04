@@ -18,7 +18,15 @@ This full-stack MERN application provides:
 - Node.js 18+ (for local development without containers)
 - MongoDB (local or Atlas)
 
-### Local Development (Docker)
+### Login Credentials
+
+Default admin account:
+- **Email**: `admin@eker.local`
+- **Password**: `ChangeMe123!`
+
+Or use **Google Login** (see [Google OAuth Setup](GOOGLE_OAUTH_SETUP.md))
+
+### Running Locally
 
 1. Copy environment files:
    ```bash
