@@ -3,7 +3,7 @@
   publish = "frontend/build"
 
 [context.production.environment]
-  REACT_APP_API_URL = "https://your-backend.example.com"
+  REACT_APP_API_URL = "https://aiagent-backend-811233202539.us-central1.run.app"
 
 [dev]
   command = "npm run start"
