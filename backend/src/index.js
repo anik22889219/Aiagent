@@ -14,7 +14,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new socketIo.Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3005", "http://localhost:3006"],
+    origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:3005", "http://localhost:3006", "https://beautiful-palmier-e974d0.netlify.app"],
     methods: ['GET', 'POST'],
   },
 });
