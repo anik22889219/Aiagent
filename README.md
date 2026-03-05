@@ -3,6 +3,7 @@
 A futuristic SaaS dashboard for managing an autonomous AI agent system (Iron-Man/JARVIS style).
 
 ## Overview
+
 This full-stack MERN application provides:
 
 - JWT authentication with admin/operator roles
@@ -13,7 +14,13 @@ This full-stack MERN application provides:
 
 ## Getting Started
 
+### Live Deployment Links
+
+- **Frontend (Netlify)**: [https://beautiful-palmier-e974d0.netlify.app](https://beautiful-palmier-e974d0.netlify.app)
+- **Backend API (Cloud Run)**: [https://aiagent-backend-811233202539.us-central1.run.app/api/health](https://aiagent-backend-811233202539.us-central1.run.app/api/health)
+
 ### Prerequisites
+
 - Docker & Docker Compose installed
 - Node.js 18+ (for local development without containers)
 - MongoDB (local or Atlas)
@@ -21,6 +28,7 @@ This full-stack MERN application provides:
 ### Login Credentials
 
 Default admin account:
+
 - **Email**: `admin@eker.local`
 - **Password**: `ChangeMe123!`
 
@@ -29,12 +37,14 @@ Or use **Google Login** (see [Google OAuth Setup](GOOGLE_OAUTH_SETUP.md))
 ### Running Locally
 
 1. Copy environment files:
+
    ```bash
    cp backend/.env.example backend/.env
    # edit backend/.env with secrets
    ```
 
 2. Start containers:
+
    ```bash
    docker-compose up --build
    ```
@@ -44,6 +54,7 @@ Or use **Google Login** (see [Google OAuth Setup](GOOGLE_OAUTH_SETUP.md))
 ### Manual Setup
 
 #### Backend
+
 ```bash
 cd backend
 npm install
@@ -53,6 +64,7 @@ npm run dev
 ```
 
 #### Frontend
+
 ```bash
 cd frontend
 npm install
@@ -68,6 +80,7 @@ npm start
 - `docker-compose.yml` - Docker configuration for services
 
 ## API Documentation
+
 The backend exposes the following endpoints:
 
 - `POST /api/auth/register` - register new user
@@ -90,10 +103,12 @@ The backend exposes the following endpoints:
 - `GET /api/system/logs` - system logs
 
 Socket.IO namespaces
+
 - `/api/agent` for agent events
 - `/api/logs` for streaming logs
 
 ## Next Steps
+
 Start building frontend components and additional backend features such as analytics, integrations, audit logging, rate limiting, and tests.
 
 ## Deploying to Netlify
@@ -114,4 +129,5 @@ Quick steps:
 See `INSTALL_NETLIFY.md` for a beautifully formatted step-by-step guide (Bangla) and troubleshooting tips.
 
 ## Contribution
+
 Contributions are welcome! Please follow the code style and add corresponding directives when new features are implemented.
