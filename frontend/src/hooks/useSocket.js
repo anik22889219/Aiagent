@@ -3,6 +3,12 @@ import { io } from 'socket.io-client';
 
 export function useSocket(namespace, onEvent) {
   const socketRef = useRef(null);
+  const handlersRef = useRef(onEvent);
+
+  // Keep latest handlers in ref so we don't need to re-bind socket listeners on every render
+  useEffect(() => {
+    handlersRef.current = onEvent;
+  }, [onEvent]);
 
   useEffect(() => {
     const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -14,28 +20,24 @@ export function useSocket(namespace, onEvent) {
       reconnectionAttempts: 5
     });
 
+    // Bind listeners ONCE using the keys from the initial onEvent object
     if (onEvent) {
-      Object.entries(onEvent).forEach(([event, handler]) => {
-        socketRef.current.on(event, handler);
+      Object.keys(onEvent).forEach((event) => {
+        socketRef.current.on(event, (...args) => {
+          if (handlersRef.current && handlersRef.current[event]) {
+            handlersRef.current[event](...args);
+          }
+        });
       });
     }
 
     return () => {
       if (socketRef.current) {
+        // Disconnect automatically removes all bound listeners
         socketRef.current.disconnect();
       }
     };
   }, [namespace]); // Only reconnect if namespace changes
-
-  // Update handlers without reconnecting
-  useEffect(() => {
-    if (!socketRef.current || !onEvent) return;
-
-    Object.entries(onEvent).forEach(([event, handler]) => {
-      socketRef.current.off(event);
-      socketRef.current.on(event, handler);
-    });
-  }, [onEvent]);
 
   return socketRef.current;
 }
