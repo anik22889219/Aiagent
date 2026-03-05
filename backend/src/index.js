@@ -79,6 +79,7 @@ app.use('/api/integrations', require('./routes/integrations'));
 app.use('/api/knowledge', require('./routes/knowledge'));
 app.use('/api/tools', require('./routes/tools'));
 app.use('/api/a2a', require('./routes/a2a'));
+app.use('/api/studio', require('./routes/studio')); // Creator Studio endpoints
 
 app.get('/api/health', (req, res) => {
   res.json({

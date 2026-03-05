@@ -13,11 +13,13 @@ import Training from './pages/Training';
 import KnowledgeBase from './pages/KnowledgeBase';
 import Tools from './pages/Tools';
 import Agents from './pages/Agents';
+import CreatorStudio from './pages/CreatorStudio';
 
 const NavBar = () => {
   const location = useLocation();
   const links = [
     { path: '/', label: '🏠 Dashboard' },
+    { path: '/studio', label: '🎨 Studio' },
     { path: '/training', label: '🧠 Training' },
     { path: '/knowledge', label: '💾 Knowledge' },
     { path: '/tools', label: '🔧 Tools' },
@@ -36,8 +38,8 @@ const NavBar = () => {
           key={link.path}
           to={link.path}
           className={`px-3 py-1.5 rounded text-xs font-medium whitespace-nowrap transition-all ${location.pathname === link.path
-              ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50'
-              : 'text-gray-400 hover:text-neon-blue hover:bg-neon-blue/10'
+            ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50'
+            : 'text-gray-400 hover:text-neon-blue hover:bg-neon-blue/10'
             }`}
         >
           {link.label}
@@ -55,6 +57,7 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/studio" element={<CreatorStudio />} />
             <Route path="/training" element={<Training />} />
             <Route path="/knowledge" element={<KnowledgeBase />} />
             <Route path="/tools" element={<Tools />} />
