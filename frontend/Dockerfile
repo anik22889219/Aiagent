@@ -1,11 +1,13 @@
-FROM node:18-alpine AS build
+# Frontend Dockerfile
+FROM node:18-slim AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:18-slim
+WORKDIR /app
+RUN npm install -g serve
+COPY --from=build /app/build ./build
+ENTRYPOINT ["serve", "-s", "build", "-l", "8080"]
