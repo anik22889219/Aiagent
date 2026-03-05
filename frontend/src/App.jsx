@@ -14,12 +14,14 @@ import KnowledgeBase from './pages/KnowledgeBase';
 import Tools from './pages/Tools';
 import Agents from './pages/Agents';
 import CreatorStudio from './pages/CreatorStudio';
+import LinkedinAutomation from './pages/LinkedinAutomation';
 
 const NavBar = () => {
   const location = useLocation();
   const links = [
     { path: '/', label: '🏠 Dashboard' },
     { path: '/studio', label: '🎨 Studio' },
+    { path: '/linkedin', label: '🔗 LinkedIn' },
     { path: '/training', label: '🧠 Training' },
     { path: '/knowledge', label: '💾 Knowledge' },
     { path: '/tools', label: '🔧 Tools' },
@@ -58,6 +60,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/studio" element={<CreatorStudio />} />
+            <Route path="/linkedin" element={<LinkedinAutomation />} />
             <Route path="/training" element={<Training />} />
             <Route path="/knowledge" element={<KnowledgeBase />} />
             <Route path="/tools" element={<Tools />} />
