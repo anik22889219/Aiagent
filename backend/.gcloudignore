@@ -1,0 +1,8 @@
+.gcloudignore
+.git
+.gitignore
+node_modules
+.env
+tests
+*.test.js
+jest.config.js

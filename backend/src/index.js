@@ -108,11 +108,12 @@ logNamespace.on('connection', (socket) => {
   console.log('Client connected to logs namespace');
 });
 
-const port = PORT || 5000;
-server.listen(port, () => {
+// Handle Port correctly for Cloud Run (must listen on 8080 or process.env.PORT)
+const port = process.env.PORT || 8080;
+server.listen(port, "0.0.0.0", () => {
   console.log(`🚀 JARVIS Server running on port ${port}`);
-  console.log(`📡 Agent Card: http://localhost:${port}/.well-known/agent.json`);
-  console.log(`🤝 A2A Endpoint: http://localhost:${port}/a2a`);
+  console.log(`📡 Agent Card: /.well-known/agent.json`);
+  console.log(`🤝 A2A Endpoint: /a2a`);
 });
 
 module.exports = { app, server };
